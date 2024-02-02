@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+    db:
+        image: mysql:8.0
+        container_name: green-tech-db
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: greenTech
+        ports:
+            - "3310:3306"
+        volumes:
+            - ./docker-compose/mysql:/var/lib/mysql
+networks:
+    green-tech:
+        driver: bridge
