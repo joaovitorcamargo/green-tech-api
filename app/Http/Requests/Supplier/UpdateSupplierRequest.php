@@ -20,10 +20,9 @@ class UpdateSupplierRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|unique:suppliers,email|max:255',
+            'email' => 'required|string|max:255',
             'phone' => 'string|nullable|max:25',
             'products' => ['array'],
-            'products.*' => ['exists:products,id'],
             'address_name' => 'required|string|max:40',
             'address_number' => 'required|string|max:40',
             'address_zip_code' => 'required|string|max:40',

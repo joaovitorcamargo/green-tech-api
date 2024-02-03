@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Supplier\{
     CreateSupplierRequest,
+    DetachProductRequest,
     UpdateSupplierRequest
 };
 use App\Models\Supplier;
@@ -32,11 +33,22 @@ class SupplierController extends Controller
         }
     }
 
-    public function create(CreateSupplierRequest $request) {
+    public function getCurrentUser(Supplier $supplier) {
+        try {
+            return response()->json([
+                'supplier' => $supplier->with('products')->find($supplier->id)
+            ], 200);
+
+        }catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        }
+    }
+
+    public function detachProduct(DetachProductRequest $request) {
         try {
             $data = $request->validated();
 
-            $this->supplierService->createSupplier($data);
+            $this->supplierService->detachProduct($data);
 
             return response()->json([
                 'message' => 'Supplier created successfully',

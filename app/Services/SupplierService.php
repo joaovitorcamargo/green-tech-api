@@ -33,6 +33,17 @@ class SupplierService
         return $supplier;
     }
 
+    public function detachProduct(array $data)
+    {
+        $supplier = $this->supplierRepository->detachProduct($data);
+
+        if(!$supplier){
+            throw new Exception('Supplier could not be created', 500);
+        }
+
+        return $supplier;
+    }
+
     public function updateSupplier(Supplier $supplier, array $data)
     {
         $supplier = $this->supplierRepository->updateSupplier($supplier, $data);

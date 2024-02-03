@@ -6,6 +6,7 @@ use App\Models\Supplier;
 use App\Models\User;
 use App\Repositories\Interfaces\InterfacesUserRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class SupplierRepository
@@ -25,13 +26,22 @@ class SupplierRepository
         return $supplier;
     }
 
+    public function detachProduct(array $data) {
+        $supplier = Supplier::where('id', $data['supplier_id'])->first();
+        $supplier->products()->detach($data['product_id']);
+        return true;
+    }
+
     public function updateSupplier(Supplier $supplier , array $data) {
         if (!isset($supplier->id)) {
             return false;
         }
 
         if (isset($data['products'])) {
-            $supplier->products()->sync($data['products']);
+            $idsOnly = array_map(function($product) {
+                return $product['id'];
+            }, $data['products']);
+            $supplier->products()->sync($idsOnly);
         }
         $supplier->update($data);
 
