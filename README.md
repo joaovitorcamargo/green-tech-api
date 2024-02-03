@@ -12,6 +12,12 @@
 composer install
 ```
 
+### Rode o comando
+
+```sh
+php artisan key:generate
+```
+
 ### Exceute o docker com o banco
 
 ```sh

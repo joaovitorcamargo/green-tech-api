@@ -44,6 +44,21 @@ class SupplierController extends Controller
         }
     }
 
+    public function create(CreateSupplierRequest $request) {
+        try {
+            $data = $request->validated();
+
+            $this->supplierService->createSupplier($data);
+
+            return response()->json([
+                'message' => 'Supplier created successfully',
+                'status' => '200',
+            ]);
+        }catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], $e->getCode());
+        }
+    }
+
     public function detachProduct(DetachProductRequest $request) {
         try {
             $data = $request->validated();
